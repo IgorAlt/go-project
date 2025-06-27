@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
-	"unrealProject/models"
+	"unrealProject/internal/models"
 )
 
 type UserRepository struct {

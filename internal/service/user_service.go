@@ -3,15 +3,15 @@ package service
 import (
 	"golang.org/x/crypto/bcrypt"
 	"unrealProject/internal/handlers/dto"
+	"unrealProject/internal/models"
 	"unrealProject/internal/repository"
-	"unrealProject/models"
 )
 
 type UserService struct {
-	repo *repository.UserRepository
+	repo repository.UserRepositoryInterface
 }
 
-func NewUserService(repo *repository.UserRepository) *UserService {
+func NewUserService(repo repository.UserRepositoryInterface) *UserService {
 	return &UserService{repo: repo}
 }
 

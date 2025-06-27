@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"unrealProject/db"
-	"unrealProject/models"
+	"unrealProject/internal/models"
 )
 
 func getUserIDFromURLParams(w http.ResponseWriter, r *http.Request) int {
