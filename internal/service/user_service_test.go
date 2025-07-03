@@ -19,6 +19,14 @@ func (m *MockUserRepo) Create(user *models.User) (*models.User, error) {
 	return args.Get(0).(*models.User), args.Error(1)
 }
 
+func (m *MockUserRepo) GetById(id int) (*models.User, error) {
+	args := m.Called(id)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*models.User), args.Error(1)
+}
+
 func TestUserService_CreateUser_Success(t *testing.T) {
 	mockRepo := new(MockUserRepo)
 	service := NewUserService(mockRepo)

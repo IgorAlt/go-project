@@ -33,7 +33,7 @@ func main() {
 	r.Get("/hello", handlers.HelloHandler)
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/create", userHandler.CreateUser)
-		r.Get("/{id}", handlers.GetUserById)
+		r.Get("/{id}", userHandler.GetUserById)
 		r.Delete("/{id}", handlers.DeleteUser)
 	})
 
