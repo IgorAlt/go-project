@@ -19,3 +19,12 @@ func (r *UserRepository) Create(user *models.User) (*models.User, error) {
 		user.Name, user.Email, user.Password).Scan(&user.ID)
 	return user, err
 }
+
+func (r *UserRepository) GetById(id int) (*models.User, error) {
+	user := &models.User{}
+	err := r.db.Get(user, "SELECT id, name, email FROM users WHERE id = $1", id)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}

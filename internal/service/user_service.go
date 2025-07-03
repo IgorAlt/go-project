@@ -29,3 +29,7 @@ func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*models.User, erro
 
 	return s.repo.Create(user)
 }
+
+func (s *UserService) GetUserById(id int) (*models.User, error) {
+	return s.repo.GetById(id)
+}
