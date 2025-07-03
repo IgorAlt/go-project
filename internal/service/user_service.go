@@ -7,6 +7,8 @@ import (
 	"unrealProject/internal/repository"
 )
 
+var bcryptGenerateFromPassword = bcrypt.GenerateFromPassword
+
 type UserService struct {
 	repo repository.UserRepositoryInterface
 }
@@ -16,7 +18,7 @@ func NewUserService(repo repository.UserRepositoryInterface) *UserService {
 }
 
 func (s *UserService) CreateUser(req *dto.CreateUserRequest) (*models.User, error) {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	hashedPassword, err := bcryptGenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}

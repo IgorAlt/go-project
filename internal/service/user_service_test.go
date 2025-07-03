@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/mock"
 	"testing"
 	"unrealProject/internal/handlers/dto"
@@ -55,4 +56,24 @@ func TestUserService_CreateUser_Success(t *testing.T) {
 	}
 
 	mockRepo.AssertExpectations(t)
+}
+func TestUserService_CreateUser_HashError(t *testing.T) {
+	original := bcryptGenerateFromPassword
+
+	defer func() { bcryptGenerateFromPassword = original }()
+
+	bcryptGenerateFromPassword = func([]byte, int) ([]byte, error) {
+		return nil, fmt.Errorf("hashing error")
+	}
+
+	service := NewUserService(nil)
+	_, err := service.CreateUser(&dto.CreateUserRequest{
+		Name:     "A",
+		Email:    "B",
+		Password: "C",
+	})
+
+	if err == nil {
+		t.Errorf("expected error from bcrypt, got nil")
+	}
 }
