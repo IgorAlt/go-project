@@ -77,3 +77,28 @@ func TestUserService_CreateUser_HashError(t *testing.T) {
 		t.Errorf("expected error from bcrypt, got nil")
 	}
 }
+
+func TestUserService_GetUserById(t *testing.T) {
+	mockRepo := new(MockUserRepo)
+	service := NewUserService(mockRepo)
+
+	expectedUser := &models.User{
+		ID:    1,
+		Name:  "John Doe",
+		Email: "john@example.com",
+	}
+
+	mockRepo.On("GetById", mock.MatchedBy(func(id int) bool {
+		return expectedUser.ID == id
+	})).Return(expectedUser, nil)
+
+	createdUser, err := service.GetUserById(1)
+	if err != nil {
+		t.Errorf("expected no error, got %v", err)
+	}
+	if createdUser.ID != expectedUser.ID {
+		t.Errorf("expected user %v, got %v", expectedUser, createdUser)
+	}
+
+	mockRepo.AssertExpectations(t)
+}
